@@ -21,6 +21,16 @@ public class Run {
 
         ArrayList<Pod> pods = new BeginSort().getPods(engineers, ENGINEERS_PER_POD);
 
+        StringBuffer result = new StringBuffer();
+        for (Pod pod : pods) {
+            result.append(pod.podName + ": ");
+            for (Engineer engineer : pod.engineers) {
+                result.append(engineer.score + ",");
+            }
+            result.append("\n");
+        }
+        System.out.println(result);
+
         System.out.println("Sort time to complete: " + (System.currentTimeMillis()-start) + "ms");
     }
 

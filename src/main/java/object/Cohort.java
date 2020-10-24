@@ -8,11 +8,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Cohort {
+    private final DecimalFormat DF = new DecimalFormat("###.#");
 
     public ArrayList<Engineer> engineers;
     public ArrayList<Pod> pods;
-    public int classSize, female, male, pnta, diverse, intern;
-    public double percentFemale, percentMale, percentPnta, percentDiverse, percentPreviousIntern;
+    public int classSize, female, male, pnta, diverse, notDiverse, intern, notIntern;
+    public double percentFemale, percentMale, percentPnta, percentDiverse, percentNotDiverse, percentPreviousIntern, percentNotPreviousIntern;
 
     public Cohort(ArrayList<Engineer> engineers, ArrayList<Pod> pods) {
         this.engineers = engineers;
@@ -48,8 +49,16 @@ public class Cohort {
         return diverse;
     }
 
+    public int getNotDiverse() {
+        return notDiverse;
+    }
+
     public int getIntern() {
         return intern;
+    }
+
+    public int getNotIntern() {
+        return notIntern;
     }
 
     public double getPercentFemale() {
@@ -68,17 +77,26 @@ public class Cohort {
         return percentDiverse;
     }
 
+    public double getPercentNotDiverse() {
+        return percentNotDiverse;
+    }
+
     public double getPercentPreviousIntern() {
         return percentPreviousIntern;
     }
 
+    public double getPercentNotPreviousIntern() {
+        return percentNotPreviousIntern;
+    }
+
     public void setAll() {
-        DecimalFormat df = new DecimalFormat("###.#");
         int male = 0;
         int female = 0;
         int pnta = 0;
         int diverse = 0;
+        int notDiverse = 0;
         int intern = 0;
+        int notIntern = 0;
 
         for (Engineer engineer : engineers) {
             if (engineer.gender.equals(Gender.MALE)) {
@@ -90,9 +108,13 @@ public class Cohort {
             }
             if (engineer.diverse.equals(Diversity.DIVERSE)) {
                 diverse++;
+            } else if (engineer.diverse.equals(Diversity.NOT_DIVERSE)) {
+                notDiverse++;
             }
             if (engineer.previousIntern.equals(Intern.PREVIOUS_INTERN)) {
                 intern++;
+            } else if (engineer.previousIntern.equals(Intern.NOT_PREVIOUS_INTERN)) {
+                notIntern++;
             }
         }
 
@@ -102,12 +124,16 @@ public class Cohort {
         this.female = female;
         this.pnta = pnta;
         this.diverse = diverse;
+        this.notDiverse = notDiverse;
         this.intern = intern;
+        this.notIntern = notIntern;
 
-        this.percentFemale = Double.parseDouble(df.format(((double) female / (double) classSize)*100));
-        this.percentMale = Double.parseDouble(df.format(((double) male / (double) classSize)*100));
-        this.percentPnta = Double.parseDouble(df.format(((double) pnta / (double) classSize)*100));
-        this.percentDiverse = Double.parseDouble(df.format(((double) diverse / (double) classSize)*100));
-        this.percentPreviousIntern = Double.parseDouble(df.format(((double) intern / (double) classSize)*100));
+        this.percentFemale = Double.parseDouble(DF.format(((double) female / (double) classSize)*100));
+        this.percentMale = Double.parseDouble(DF.format(((double) male / (double) classSize)*100));
+        this.percentPnta = Double.parseDouble(DF.format(((double) pnta / (double) classSize)*100));
+        this.percentDiverse = Double.parseDouble(DF.format(((double) diverse / (double) classSize)*100));
+        this.percentNotDiverse = Double.parseDouble(DF.format(((double) notDiverse / (double) classSize)*100));
+        this.percentPreviousIntern = Double.parseDouble(DF.format(((double) intern / (double) classSize)*100));
+        this.percentNotPreviousIntern = Double.parseDouble(DF.format(((double) notIntern / (double) classSize)*100));
     }
 }
