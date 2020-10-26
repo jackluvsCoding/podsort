@@ -36,15 +36,20 @@ public class Engineers {
             case 1:
                 return Gender.FEMALE;
             case 2:
-                switch (random.nextInt(6)) {
+                switch (random.nextInt(11)) {
                     case 0:
                     case 1:
-                        return Gender.MALE;
                     case 2:
                     case 3:
                     case 4:
+                        return Gender.MALE;
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
                         return Gender.FEMALE;
-                    case 5: return Gender.PNTA;
+                    case 10: return Gender.PNTA;
                 }
             default: return Gender.FEMALE;
         }

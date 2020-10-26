@@ -5,32 +5,20 @@ import object.Engineer;
 import object.Pod;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class BeginSort {
 
-    private static final Random RANDOM = new Random();
+    private final Optimize optimize = new Optimize();
 
-    public ArrayList<Pod> getPods(ArrayList<Engineer> engineers, int engineersPerPod) {
-        int numberOfPods = engineers.size() / engineersPerPod;
-        int remainder = engineers.size() % engineersPerPod;
-        numberOfPods = (remainder > 0) ? numberOfPods + 1 : numberOfPods;
-
+    public ArrayList<Pod> getPods(ArrayList<Engineer> engineers, int podSize) {
+        int numberOfPods = getNumberOfPods(engineers.size(), podSize);
         System.out.println("Number of Pods: " + numberOfPods);
 
         // First Sort to Create Cohort - Random
-        ArrayList<Pod> pods = fullRandomSort(engineers, numberOfPods, engineersPerPod);
+        ArrayList<Pod> pods = optimize.fullRandomSort(engineers, numberOfPods, podSize);
         Cohort cohort = new Cohort(engineers, pods);
 
         // Evaluate Sort
-        /*
-        - What is possible
-            * based on female/male ratio
-            * based on diversity ratio
-            * based on previous intern ratio
-        - Determine which pods are optimal
-        - Determine which pods need modifications
-         */
         EvaluatePods evaluatePods = new EvaluatePods();
         for (Pod pod : pods) {
             evaluatePods.printPodStats(pod);
@@ -39,34 +27,17 @@ public class BeginSort {
         EvaluateCohort evaluateCohort = new EvaluateCohort();
         evaluateCohort.printCohortStats(cohort);
 
-        //Attempt to improve
+        // Attempt to Optimize the sort
+        ArrayList<Pod> optimizedPods = optimize.runOptimization(cohort, pods, podSize);
 
-
-        return pods;
+        System.out.println("\u2022Optimized Pods Size: " + optimizedPods.size());
+        return optimizedPods;
     }
 
-    /*
-    Creates a brand new sort from the list of engineers
-     */
-    @SuppressWarnings("unchecked")
-    private ArrayList<Pod> fullRandomSort(ArrayList<Engineer> engineers, int numberOfPods, int engineersPerPod) {
-        ArrayList<Engineer> engineersClone = (ArrayList<Engineer>) engineers.clone();
-        ArrayList<Pod> pods = new ArrayList<>();
-
-        for (int i = 0; i < numberOfPods; i++) {
-            ArrayList<Engineer> engineersInPod = new ArrayList<>();
-            int count = 0;
-            while (count != engineersPerPod) {
-                if (engineersClone.size() > 0) {
-                    Engineer engineer = engineersClone.remove(RANDOM.nextInt(engineersClone.size()));
-                    engineersInPod.add(engineer);
-                }
-                count++;
-            }
-            Pod pod = new Pod("Pod " + i, engineersInPod);
-            pods.add(pod);
-        }
-        return pods;
+    private int getNumberOfPods(int classSize, int podSize) {
+        int numberOfPods = classSize / podSize;
+        int remainder = classSize % podSize;
+        return (remainder > 0) ? numberOfPods + 1 : numberOfPods;
     }
 
 }

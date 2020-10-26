@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Run {
 
     private static final int CLASS_SIZE = 43;
-    private static final int ENGINEERS_PER_POD = 4;
+    private static final int POD_SIZE = 4;
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
@@ -19,17 +19,17 @@ public class Run {
 
         ArrayList<Engineer> engineers = new Engineers().getEngineers(CLASS_SIZE);
 
-        ArrayList<Pod> pods = new BeginSort().getPods(engineers, ENGINEERS_PER_POD);
+        ArrayList<Pod> pods = new BeginSort().getPods(engineers, POD_SIZE);
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (Pod pod : pods) {
-            result.append(pod.podName + ": ");
+            result.append(pod.podName).append(": ");
             for (Engineer engineer : pod.engineers) {
-                result.append(engineer.score + ",");
+                result.append(engineer.score).append(",");
             }
             result.append("\n");
         }
-        System.out.println(result);
+        System.out.println(pods.toString() + "\n\n" + result);
 
         System.out.println("Sort time to complete: " + (System.currentTimeMillis()-start) + "ms");
     }

@@ -1,24 +1,26 @@
 object/Pod.java
  object.Pod
+sort/EvaluateCohort.java
+ sort.EvaluateCohort
+enums/Diversity.java
+ enums.Diversity
+data/Engineers.java
+ data.Engineers
+object/Engineer.java
+ object.Engineer
 enums/Gender.java
  enums.Gender
 object/Cohort.java
  object.Cohort
 enums/DiversityScore.java
  enums.DiversityScore
-enums/Diversity.java
- enums.Diversity
 enums/Intern.java
  enums.Intern
-object/Engineer.java
- object.Engineer
 sort/EvaluatePods.java
  sort.EvaluatePods
-data/Engineers.java
- data.Engineers
-sort/EvaluateCohort.java
- sort.EvaluateCohort
-sort/BeginSort.java
- sort.BeginSort
 util/Run.java
  util.Run
+sort/BeginSort.java
+ sort.BeginSort
+sort/Optimize.java
+ sort.Optimize

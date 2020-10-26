@@ -1,8 +1,35 @@
 package sort;
 
+import object.Cohort;
+import object.Engineer;
 import object.Pod;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 public class EvaluatePods {
+
+    private final DecimalFormat DF = new DecimalFormat("###.#");
+
+    public ArrayList<Pod> nonOptimalPods(ArrayList<Pod> pods, Cohort cohort) {
+        ArrayList<Pod> nonOptimalPods = new ArrayList<>();
+
+        int minimumNumberFemale = cohort.getFemale() / pods.size();
+        int minimumNumberDiverse = cohort.getDiverse() / pods.size();
+        int minimumNumberPreviousIntern = cohort.getIntern() / pods.size();
+
+        //System.out.println("-------Non Optimal Pods-------");
+        for(int i = 0; i < pods.size(); i++) {
+            Pod pod = pods.get(i);
+            if (pod.getNumberOfFemale() < minimumNumberFemale
+                    || pod.getNumberOfDiverse() < minimumNumberDiverse
+                    || pod.getNumberOfPreviousIntern() < minimumNumberPreviousIntern) {
+                nonOptimalPods.add(pods.remove(i));
+                //System.out.println(pod.toString());
+            }
+        }
+        return nonOptimalPods;
+    }
 
     public void printPodStats(Pod pod) {
         StringBuilder stringBuilder = new StringBuilder();
