@@ -11,7 +11,7 @@ public class Optimize {
 
     private static final Random RANDOM = new Random();
     private static final int MAX_TRIES = 100;
-    private  final EvaluatePods evaluatePods = new EvaluatePods();
+    private final EvaluatePods evaluatePods = new EvaluatePods();
     private ArrayList<Pod> optimizedPods;
     private int numberOfTries = 0;
     private ArrayList<Integer> previousResults = new ArrayList<>();
@@ -44,15 +44,35 @@ public class Optimize {
 
         System.out.println("End of Attempt #: " + numberOfTries + "\n\n");
 
-        if (nonOptimalPods.size() == 1) {
+        if (nonOptimalPods.size() <= 1) {
             numberOfTries = MAX_TRIES;
         } else if (numberOfTries == MAX_TRIES) {
             return optimizedPods;
+        } else if (numberOfTries % 3 == 0) {
+            if (doRandomResort(nonOptimalPods.size())) {
+                randomResort(optimizedPods, podSize);
+            }
+            resortedPods.clear();
         } else {
             numberOfTries++;
             optimize(optimizedPods, cohort, podSize);
         }
+        previousResults.clear();
         return optimizedPods;
+    }
+
+    private Boolean doRandomResort(int nonOptimalPods) {
+        int previousResult = 0;
+        boolean previousMatched = false;
+        for (int i = 0; i < previousResults.size(); i++) {
+            if (i == 0) {
+                previousResult = previousResults.get(i);
+            }
+            if (previousResults.get(i) == previousResult) {
+                previousMatched = true;
+            }
+        }
+        return previousMatched;
     }
 
     private ArrayList<Pod> randomResort(ArrayList<Pod> pods, int podSize) {
